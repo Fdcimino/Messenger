@@ -47,15 +47,12 @@ class Client {
              System.exit(1);
          }*/
          
-         try( Socket kkSocket = new Socket(hostName, portNumber);
-                 PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-                 BufferedReader in = new BufferedReader(
-                     new InputStreamReader(kkSocket.getInputStream()));){
+         try( 
+        		 Socket kkSocket = new Socket(hostName, portNumber);
+        		 ){
         	 
-        	 inputStream = new In(in);
-        	 outputStream = new Out(out);
-        	 inputStream.start();
-        	 outputStream.start();
+        	 inputStream = new In(kkSocket);
+        	 outputStream = new Out(kkSocket);
         	 
          } catch (UnknownHostException e) {
              System.err.println("Don't know about host " + hostName);

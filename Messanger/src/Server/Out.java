@@ -1,6 +1,8 @@
 package Server;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 public class Out extends Thread{
     
@@ -8,9 +10,14 @@ public class Out extends Thread{
 	PrintWriter out;
 	String outputLine;
 	
-	public Out(PrintWriter out, MiniServer master) {
-		this.out = out;
+	public Out(Socket socket, MiniServer master) {
 		this.master = master;
+		try {
+			out = new PrintWriter(socket.getOutputStream(), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.start();
 	}
 
 	public void run(){

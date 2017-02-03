@@ -1,29 +1,30 @@
 package Client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
 
 public class Out extends Thread{
 	PrintWriter out;
 	String fromUser;
-	BufferedReader stdIn;
-	public Out(PrintWriter out){
-		this.out = out;
-		stdIn = new BufferedReader(new InputStreamReader(System.in));
+	Scanner stdIn;
+	
+	public Out(Socket socket) {
+		stdIn = new Scanner(System.in);
+		try {
+			out = new PrintWriter(socket.getOutputStream(), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.start();
 	}
 	
 	public void run(){
 		
-		try {
-			while (true){
-			    fromUser = stdIn.readLine();
-			    out.println(fromUser);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (true){
+		    fromUser = stdIn.nextLine();
+		    out.println(fromUser);
 		}
 	}
 }

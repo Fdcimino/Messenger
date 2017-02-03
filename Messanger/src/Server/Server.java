@@ -20,8 +20,9 @@ public class Server {
             try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
                 while (listening) {
     	           MiniServer mini = new MiniServer(serverSocket.accept());
-    	           mini.start();
     	           clients.add(mini);
+    	           
+    	           
     	           for(MiniServer m: clients){
     	        	   if(!m.isAlive()){
     	        		   clients.remove(m);
